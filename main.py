@@ -73,6 +73,7 @@ def coding(x):
         else:
             y+=x[i]
     codebook.update(codebook_ori)
+    print(y)
     return(y)
 
 def decoding(x):
@@ -87,6 +88,7 @@ def decoding(x):
                 break
         codebook.update(panning(codebook))
     codebook.update(codebook_ori)
+    print(y)
     return(y)
 
 def coding_fin(x):
