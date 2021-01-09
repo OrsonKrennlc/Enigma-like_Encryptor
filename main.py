@@ -111,7 +111,7 @@ def decoding_fin(x):
 
 def inputbox():
     root = tk.Tk()
-    root.title("INPUTING")
+    root.title("CODING")
     root.geometry("600x200")
     root.geometry("+210+210")
     enter=tk.Entry(root,width=50)
@@ -122,7 +122,7 @@ def inputbox():
 
 def outputbox():
     root = tk.Tk()
-    root.title("OUTPUTING")
+    root.title("DECODING")
     root.geometry("600x200")
     root.geometry("+310+310")
     enter=tk.Entry(root,width=50)
