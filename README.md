@@ -6,6 +6,7 @@
 ## FUNCTION
   - Very very poor user interface
   - Two options: "coding", "decoding"
+  
     coding
     - text box to input your massage
     - press "start" to start coding
