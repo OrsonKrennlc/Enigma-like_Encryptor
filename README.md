@@ -10,6 +10,7 @@
     - text box to input your massage
     - press "start" to start coding
     - a pop up window will show the coded message
+    
     decoding
     - text box to input your message
     - press "start" to start decoding
