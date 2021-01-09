@@ -1,7 +1,9 @@
 # PASSWORDING
 ## INTRODUCTION
   *This is a homework for school...NOT FOR FUN
+  
   The program was developed with python3.8.7 only using tkinter
+  
   Using the same phenomenon as Enigma Codes.
 ## FUNCTION
   - Very very poor user interface
