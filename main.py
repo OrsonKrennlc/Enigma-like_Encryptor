@@ -141,5 +141,4 @@ inputing=tk.Button(root,text="CODING",height=3,width=10,command=lambda:inputbox(
 inputing.pack(side="top",pady=20)
 outputing=tk.Button(root,text="DECODING",height=3,width=10,command=lambda:outputbox())
 outputing.pack(side="bottom",pady=20)
-
 root.mainloop()
