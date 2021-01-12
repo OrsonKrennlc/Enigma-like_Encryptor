@@ -1,10 +1,11 @@
-# PASSWORDING
+# An Enigma-like Encryptor
 ## INTRODUCTION
   *This is a homework for school...NOT FOR FUN
   
   The program was developed with python3.8.7 only using tkinter
   
   Using the same phenomenon as Enigma Codes.
+  ### Phenomenon
 ## FUNCTION
   - Very very poor user interface
   - Two options: "coding", "decoding"
