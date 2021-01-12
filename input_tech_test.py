@@ -25,9 +25,84 @@ codebook={"a":"a",
           "y":"y",
           "z":"z",}
 
-cb1=codebook
-cb2=codebook
-cb3=codebook
+cb1={"a":"a",
+          "b":"b",
+          "c":"c",
+          "d":"d",
+          "e":"e",
+          "f":"f",
+          "g":"g",
+          "h":"h",
+          "i":"i",
+          "j":"j",
+          "k":"k",
+          "l":"l",
+          "m":"m",
+          "n":"n",
+          "o":"o",
+          "p":"p",
+          "q":"q",
+          "r":"r",
+          "s":"s",
+          "t":"t",
+          "u":"u",
+          "v":"v",
+          "w":"w",
+          "x":"x",
+          "y":"y",
+          "z":"z",}
+cb2={"a":"a",
+          "b":"b",
+          "c":"c",
+          "d":"d",
+          "e":"e",
+          "f":"f",
+          "g":"g",
+          "h":"h",
+          "i":"i",
+          "j":"j",
+          "k":"k",
+          "l":"l",
+          "m":"m",
+          "n":"n",
+          "o":"o",
+          "p":"p",
+          "q":"q",
+          "r":"r",
+          "s":"s",
+          "t":"t",
+          "u":"u",
+          "v":"v",
+          "w":"w",
+          "x":"x",
+          "y":"y",
+          "z":"z",}
+cb3={"a":"a",
+          "b":"b",
+          "c":"c",
+          "d":"d",
+          "e":"e",
+          "f":"f",
+          "g":"g",
+          "h":"h",
+          "i":"i",
+          "j":"j",
+          "k":"k",
+          "l":"l",
+          "m":"m",
+          "n":"n",
+          "o":"o",
+          "p":"p",
+          "q":"q",
+          "r":"r",
+          "s":"s",
+          "t":"t",
+          "u":"u",
+          "v":"v",
+          "w":"w",
+          "x":"x",
+          "y":"y",
+          "z":"z",}
 
 def panning(codebook):
     cbtem = str(codebook)
@@ -47,23 +122,97 @@ for i in range(int(z[1])):
 for i in range(int(z[2])):
     panning(cb3)
 
-x=x[3:len(x)]
-y=x[3:len(x)]
-y+=codebook[x[0]]
-for i in range(1,len(x)):
-    cb1.update(panning(cb1))
-    if x[i]!=".":
-        y+=cb1[x[i]]
+y=z+' '
+x=x[4:len(x)]
+for i in range(len(x)):
+    if x[i] in codebook.keys():
+        m=cb1[x[i]]
+        cb1.update(panning(cb1))
+        m= cb2[m]
+        cb2.update(panning(cb2))
+        m= cb3[m]
+        cb3.update(panning(cb3))
+        y+=m
     else:
         y+=x[i]
-    cb1.update(panning(cb1))
-    if x[i] != ".":
-        y += cb2[x[i]]
-    else:
         continue
-    cb1.update(panning(cb1))
-    if x[i] != ".":
-        y += cb3[x[i]]+"-"
-    else:
-        continue
-print(y[0:len(y)-1])
+
+cb1={"a":"a",
+          "b":"b",
+          "c":"c",
+          "d":"d",
+          "e":"e",
+          "f":"f",
+          "g":"g",
+          "h":"h",
+          "i":"i",
+          "j":"j",
+          "k":"k",
+          "l":"l",
+          "m":"m",
+          "n":"n",
+          "o":"o",
+          "p":"p",
+          "q":"q",
+          "r":"r",
+          "s":"s",
+          "t":"t",
+          "u":"u",
+          "v":"v",
+          "w":"w",
+          "x":"x",
+          "y":"y",
+          "z":"z",}
+cb2={"a":"a",
+          "b":"b",
+          "c":"c",
+          "d":"d",
+          "e":"e",
+          "f":"f",
+          "g":"g",
+          "h":"h",
+          "i":"i",
+          "j":"j",
+          "k":"k",
+          "l":"l",
+          "m":"m",
+          "n":"n",
+          "o":"o",
+          "p":"p",
+          "q":"q",
+          "r":"r",
+          "s":"s",
+          "t":"t",
+          "u":"u",
+          "v":"v",
+          "w":"w",
+          "x":"x",
+          "y":"y",
+          "z":"z",}
+cb3={"a":"a",
+          "b":"b",
+          "c":"c",
+          "d":"d",
+          "e":"e",
+          "f":"f",
+          "g":"g",
+          "h":"h",
+          "i":"i",
+          "j":"j",
+          "k":"k",
+          "l":"l",
+          "m":"m",
+          "n":"n",
+          "o":"o",
+          "p":"p",
+          "q":"q",
+          "r":"r",
+          "s":"s",
+          "t":"t",
+          "u":"u",
+          "v":"v",
+          "w":"w",
+          "x":"x",
+          "y":"y",
+          "z":"z",}
+print(y)
