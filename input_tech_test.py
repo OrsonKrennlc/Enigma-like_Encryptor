@@ -25,6 +25,10 @@ codebook={"a":"a",
           "y":"y",
           "z":"z",}
 
+cb1=codebook
+cb2=codebook
+cb3=codebook
+
 def panning(codebook):
     cbtem = str(codebook)
     newcb = {}
@@ -35,12 +39,31 @@ def panning(codebook):
     return(newcb)
 
 x=str(input())
-y=""
+z=x[0:3]
+for i in range(int(z[0])):
+    panning(cb1)
+for i in range(int(z[1])):
+    panning(cb2)
+for i in range(int(z[2])):
+    panning(cb3)
+
+x=x[3:len(x)]
+y=x[3:len(x)]
 y+=codebook[x[0]]
 for i in range(1,len(x)):
-    codebook.update(panning(codebook))
+    cb1.update(panning(cb1))
     if x[i]!=".":
-        y+=codebook[x[i]]
+        y+=cb1[x[i]]
     else:
-        y+="."
-print(y)
+        y+=x[i]
+    cb1.update(panning(cb1))
+    if x[i] != ".":
+        y += cb2[x[i]]
+    else:
+        continue
+    cb1.update(panning(cb1))
+    if x[i] != ".":
+        y += cb3[x[i]]+"-"
+    else:
+        continue
+print(y[0:len(y)-1])
