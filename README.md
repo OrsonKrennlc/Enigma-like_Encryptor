@@ -1,11 +1,28 @@
 # An Enigma-like Encryptor
 ## INTRODUCTION
-  *This is a homework for school...NOT FOR FUN
+  * This is a homework for school...NOT FOR FUN
   
   The program was developed with python3.8.7 only using tkinter
   
   Using the same phenomenon as Enigma Codes.
-  ### Phenomenon
+### Phenomenon
+- Thi-pan encrypting system
+- Highly classified
+- Highly simulated original encryptor
+### Using
+- Encrypt
+  - Go to [coding] mode
+  - Input three numbers, they are your special keys
+  - Add a space
+  - Input your message
+  - Click [start]
+  * DO NOT forget delete keys in front if you want to keep secret
+- Decrypt
+  - Go to [decoding] mode
+  - Input your keys
+  - Add a space
+  - Input your coded message
+  - Click [start]
 ## FUNCTION
   - Very very poor user interface
   - Two options: "coding", "decoding"
