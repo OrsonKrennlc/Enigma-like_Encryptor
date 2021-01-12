@@ -116,11 +116,11 @@ def panning(codebook):
 x=str(input())
 z=x[0:3]
 for i in range(int(z[0])):
-    panning(cb1)
+    cb1.update(panning(cb1))
 for i in range(int(z[1])):
-    panning(cb2)
+    cb2.update(panning(cb2))
 for i in range(int(z[2])):
-    panning(cb3)
+    cb3.update(panning(cb3))
 
 y=z+' '
 x=x[4:len(x)]
