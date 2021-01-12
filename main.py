@@ -26,112 +26,84 @@ codebook={"a":"a",
           "x":"x",
           "y":"y",
           "z":"z",}
-
-cb1={"a":"a",
-          "b":"b",
-          "c":"c",
-          "d":"d",
-          "e":"e",
-          "f":"f",
-          "g":"g",
-          "h":"h",
-          "i":"i",
-          "j":"j",
-          "k":"k",
-          "l":"l",
-          "m":"m",
-          "n":"n",
-          "o":"o",
-          "p":"p",
-          "q":"q",
-          "r":"r",
-          "s":"s",
-          "t":"t",
-          "u":"u",
-          "v":"v",
-          "w":"w",
-          "x":"x",
-          "y":"y",
-          "z":"z",}
-cb2={"a":"a",
-          "b":"b",
-          "c":"c",
-          "d":"d",
-          "e":"e",
-          "f":"f",
-          "g":"g",
-          "h":"h",
-          "i":"i",
-          "j":"j",
-          "k":"k",
-          "l":"l",
-          "m":"m",
-          "n":"n",
-          "o":"o",
-          "p":"p",
-          "q":"q",
-          "r":"r",
-          "s":"s",
-          "t":"t",
-          "u":"u",
-          "v":"v",
-          "w":"w",
-          "x":"x",
-          "y":"y",
-          "z":"z",}
-cb3={"a":"a",
-          "b":"b",
-          "c":"c",
-          "d":"d",
-          "e":"e",
-          "f":"f",
-          "g":"g",
-          "h":"h",
-          "i":"i",
-          "j":"j",
-          "k":"k",
-          "l":"l",
-          "m":"m",
-          "n":"n",
-          "o":"o",
-          "p":"p",
-          "q":"q",
-          "r":"r",
-          "s":"s",
-          "t":"t",
-          "u":"u",
-          "v":"v",
-          "w":"w",
-          "x":"x",
-          "y":"y",
-          "z":"z",}
-
-codebook_ori={"a":"a",
-          "b":"b",
-          "c":"c",
-          "d":"d",
-          "e":"e",
-          "f":"f",
-          "g":"g",
-          "h":"h",
-          "i":"i",
-          "j":"j",
-          "k":"k",
-          "l":"l",
-          "m":"m",
-          "n":"n",
-          "o":"o",
-          "p":"p",
-          "q":"q",
-          "r":"r",
-          "s":"s",
-          "t":"t",
-          "u":"u",
-          "v":"v",
-          "w":"w",
-          "x":"x",
-          "y":"y",
-          "z":"z",}
+cb1 = {"a": "a",
+       "b": "b",
+       "c": "c",
+       "d": "d",
+       "e": "e",
+       "f": "f",
+       "g": "g",
+       "h": "h",
+       "i": "i",
+       "j": "j",
+       "k": "k",
+       "l": "l",
+       "m": "m",
+       "n": "n",
+       "o": "o",
+       "p": "p",
+       "q": "q",
+       "r": "r",
+       "s": "s",
+       "t": "t",
+       "u": "u",
+       "v": "v",
+       "w": "w",
+       "x": "x",
+       "y": "y",
+       "z": "z", }
+cb2 = {"a": "a",
+       "b": "b",
+       "c": "c",
+       "d": "d",
+       "e": "e",
+       "f": "f",
+       "g": "g",
+       "h": "h",
+       "i": "i",
+       "j": "j",
+       "k": "k",
+       "l": "l",
+       "m": "m",
+       "n": "n",
+       "o": "o",
+       "p": "p",
+       "q": "q",
+       "r": "r",
+       "s": "s",
+       "t": "t",
+       "u": "u",
+       "v": "v",
+       "w": "w",
+       "x": "x",
+       "y": "y",
+       "z": "z", }
+cb3 = {"a": "a",
+       "b": "b",
+       "c": "c",
+       "d": "d",
+       "e": "e",
+       "f": "f",
+       "g": "g",
+       "h": "h",
+       "i": "i",
+       "j": "j",
+       "k": "k",
+       "l": "l",
+       "m": "m",
+       "n": "n",
+       "o": "o",
+       "p": "p",
+       "q": "q",
+       "r": "r",
+       "s": "s",
+       "t": "t",
+       "u": "u",
+       "v": "v",
+       "w": "w",
+       "x": "x",
+       "y": "y",
+       "z": "z", }
 
 def panning(codebook):
     cbtem = str(codebook)
@@ -143,30 +115,68 @@ def panning(codebook):
     return(newcb)
 
 def coding(x):
-    y = ""
-    y += codebook[x[0]]
-    for i in range(1,len(x)):
-        codebook.update(panning(codebook))
-        if x[i]in codebook.keys():
-            y+=codebook[x[i]]
+    z = x[0:3]
+    for i in range(int(z[0])):
+        panning(cb1)
+    for i in range(int(z[1])):
+        panning(cb2)
+    for i in range(int(z[2])):
+        panning(cb3)
+
+    y = z + ' '
+    x = x[4:len(x)]
+    for i in range(len(x)):
+        if x[i] in codebook.keys():
+            m = cb1[x[i]]
+            cb1.update(panning(cb1))
+            m = cb2[m]
+            cb2.update(panning(cb2))
+            m = cb3[m]
+            cb3.update(panning(cb3))
+            y += m
         else:
-            y+=x[i]
-    codebook.update(codebook_ori)
+            y += x[i]
+            continue
+    cb1.update(codebook)
+    cb2.update(codebook)
+    cb3.update(codebook)
     print(y)
     return(y)
 
 def decoding(x):
-    y = ""
+    z = x[0:3]
+    for i in range(int(z[0])):
+        panning(cb1)
+    for i in range(int(z[1])):
+        panning(cb2)
+    for i in range(int(z[2])):
+        panning(cb3)
+
+    y = z + ' '
+    x = x[4:len(x)]
     for i in range(len(x)):
-        for j in codebook:
-            if x[i] in codebook.keys():
-                if x[i] == codebook[j]:
-                    y += j
-            else:
-                y += x[i]
-                break
-        codebook.update(panning(codebook))
-    codebook.update(codebook_ori)
+        if x[i] in codebook.keys():
+            for j in cb3.keys():
+                if cb3[j] == x[i]:
+                    m = j
+                    cb3.update(panning(cb3))
+                    break
+            for j in cb2.keys():
+                if cb2[j] == m:
+                    m = j
+                    cb2.update(panning(cb2))
+                    break
+            for j in cb1.keys():
+                if cb1[j] == m:
+                    m = j
+                    cb1.update(panning(cb1))
+                    break
+            y += m
+        else:
+            y += x[i]
+    cb1.update(codebook)
+    cb2.update(codebook)
+    cb3.update(codebook)
     print(y)
     return(y)
 

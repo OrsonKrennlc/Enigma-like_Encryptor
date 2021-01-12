@@ -130,14 +130,17 @@ for i in range(len(x)):
             if cb3[j]==x[i]:
                 m = j
                 cb3.update(panning(cb3))
+                break
         for j in cb2.keys():
             if cb2[j]==m:
                 m=j
                 cb2.update(panning(cb2))
-        for j in cb3.keys():
-            if cb3[j]==m:
+                break
+        for j in cb1.keys():
+            if cb1[j]==m:
                 m=j
                 cb1.update(panning(cb1))
+                break
         y+=m
     else:
         y+=x[i]
