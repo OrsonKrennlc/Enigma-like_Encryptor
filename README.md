@@ -6,7 +6,7 @@
   
   Using the same phenomenon as Enigma Codes.
 ### Phenomenon
-- Thi-pan encrypting system
+- Tri-pan encrypting system
 - Highly classified
 - Highly simulated original encryptor
 ### Using
