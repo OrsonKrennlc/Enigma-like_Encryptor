@@ -1,233 +1,205 @@
 import tkinter as tk
+from tkinter import ttk, messagebox
 
-codebook={"a":"a",
-          "b":"b",
-          "c":"c",
-          "d":"d",
-          "e":"e",
-          "f":"f",
-          "g":"g",
-          "h":"h",
-          "i":"i",
-          "j":"j",
-          "k":"k",
-          "l":"l",
-          "m":"m",
-          "n":"n",
-          "o":"o",
-          "p":"p",
-          "q":"q",
-          "r":"r",
-          "s":"s",
-          "t":"t",
-          "u":"u",
-          "v":"v",
-          "w":"w",
-          "x":"x",
-          "y":"y",
-          "z":"z",}
-cb1 = {"a": "a",
-       "b": "b",
-       "c": "c",
-       "d": "d",
-       "e": "e",
-       "f": "f",
-       "g": "g",
-       "h": "h",
-       "i": "i",
-       "j": "j",
-       "k": "k",
-       "l": "l",
-       "m": "m",
-       "n": "n",
-       "o": "o",
-       "p": "p",
-       "q": "q",
-       "r": "r",
-       "s": "s",
-       "t": "t",
-       "u": "u",
-       "v": "v",
-       "w": "w",
-       "x": "x",
-       "y": "y",
-       "z": "z", }
-cb2 = {"a": "a",
-       "b": "b",
-       "c": "c",
-       "d": "d",
-       "e": "e",
-       "f": "f",
-       "g": "g",
-       "h": "h",
-       "i": "i",
-       "j": "j",
-       "k": "k",
-       "l": "l",
-       "m": "m",
-       "n": "n",
-       "o": "o",
-       "p": "p",
-       "q": "q",
-       "r": "r",
-       "s": "s",
-       "t": "t",
-       "u": "u",
-       "v": "v",
-       "w": "w",
-       "x": "x",
-       "y": "y",
-       "z": "z", }
-cb3 = {"a": "a",
-       "b": "b",
-       "c": "c",
-       "d": "d",
-       "e": "e",
-       "f": "f",
-       "g": "g",
-       "h": "h",
-       "i": "i",
-       "j": "j",
-       "k": "k",
-       "l": "l",
-       "m": "m",
-       "n": "n",
-       "o": "o",
-       "p": "p",
-       "q": "q",
-       "r": "r",
-       "s": "s",
-       "t": "t",
-       "u": "u",
-       "v": "v",
-       "w": "w",
-       "x": "x",
-       "y": "y",
-       "z": "z", }
+# --- Optimized Core Algorithm ---
+# The original code's panning mechanism effectively shifts the mapping values.
+# Mathematically, each rotor operation performs a modular arithmetic shift
+# that advances for every character evaluated. This reduces O(N * 26) 
+# dict recreations to simple O(N) integer arithmetic.
 
-def panning(codebook):
-    cbtem = str(codebook)
-    newcb = {}
-    newcb[cbtem[2]] = cbtem[257]
-    for j in range(2, 26, 1):
-        newcb[cbtem[10 * j - 8]] = cbtem[10 * (j - 1) - 3]
-    newcb[cbtem[252]] = cbtem[247]
-    return(newcb)
-
-def coding(x):
-    z = x[0:3]
-    for i in range(int(z[0])):
-        cb1.update(panning(cb1))
-    for i in range(int(z[1])):
-        cb2.update(panning(cb2))
-    for i in range(int(z[2])):
-        cb3.update(panning(cb3))
-
-    y = z + ' '
-    x = x[4:len(x)]
-    for i in range(len(x)):
-        if x[i] in codebook.keys():
-            m = cb1[x[i]]
-            cb1.update(panning(cb1))
-            m = cb2[m]
-            cb2.update(panning(cb2))
-            m = cb3[m]
-            cb3.update(panning(cb3))
-            y += m
+def optimized_coding(key, text):
+    try:
+        s1, s2, s3 = int(key[0]), int(key[1]), int(key[2])
+    except (ValueError, IndexError):
+        raise ValueError("Key must be exactly 3 digits.")
+    
+    y = ""
+    for char in text.lower():
+        if 'a' <= char <= 'z':
+            val = ord(char) - 97
+            m = (val - s1) % 26
+            s1 += 1
+            m = (m - s2) % 26
+            s2 += 1
+            m = (m - s3) % 26
+            s3 += 1
+            y += chr(m + 97)
         else:
-            y += x[i]
-            continue
-    cb1.update(codebook)
-    cb2.update(codebook)
-    cb3.update(codebook)
-    print(y)
-    return(y)
+            y += char
+    return y
+
+def optimized_decoding(key, text):
+    try:
+        s1, s2, s3 = int(key[0]), int(key[1]), int(key[2])
+    except (ValueError, IndexError):
+        raise ValueError("Key must be exactly 3 digits.")
+        
+    y = ""
+    for char in text.lower():
+        if 'a' <= char <= 'z':
+            val = ord(char) - 97
+            m = (val + s3) % 26
+            s3 += 1
+            m = (m + s2) % 26
+            s2 += 1
+            m = (m + s1) % 26
+            s1 += 1
+            y += chr(m + 97)
+        else:
+            y += char
+    return y
+
+# Backward compatibility wrappers for older external dependencies if they exist
+def coding(x):
+    try:
+        z = x[0:3]
+        text = x[4:]
+        return z + ' ' + optimized_coding(z, text)
+    except Exception:
+        return ""
 
 def decoding(x):
-    z = x[0:3]
-    for i in range(int(z[0])):
-        cb1.update(panning(cb1))
-    for i in range(int(z[1])):
-        cb2.update(panning(cb2))
-    for i in range(int(z[2])):
-        cb3.update(panning(cb3))
+    try:
+        z = x[0:3]
+        text = x[4:]
+        return z + ' ' + optimized_decoding(z, text)
+    except Exception:
+        return ""
 
-    y = z + ' '
-    x = x[4:len(x)]
-    for i in range(len(x)):
-        if x[i] in codebook.keys():
-            for j in cb3.keys():
-                if cb3[j] == x[i]:
-                    m = j
-                    cb3.update(panning(cb3))
-                    break
-            for j in cb2.keys():
-                if cb2[j] == m:
-                    m = j
-                    cb2.update(panning(cb2))
-                    break
-            for j in cb1.keys():
-                if cb1[j] == m:
-                    m = j
-                    cb1.update(panning(cb1))
-                    break
-            y += m
-        else:
-            y += x[i]
-    cb1.update(codebook)
-    cb2.update(codebook)
-    cb3.update(codebook)
-    print(y)
-    return(y)
+# --- Modern GUI Implementation ---
+class EnigmaApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Enigma-like Encryptor")
+        self.geometry("640x500")
+        self.configure(padx=20, pady=20)
+        self.eval('tk::PlaceWindow . center')
+        
+        # Determine theme and apply basic styles
+        style = ttk.Style(self)
+        available_themes = style.theme_names()
+        if 'clam' in available_themes:
+            style.theme_use('clam')
+        elif 'xpnative' in available_themes:
+            style.theme_use('xpnative')
+            
+        style.configure("TButton", font=("Segoe UI", 10, "bold"), padding=5)
+        style.configure("TLabel", font=("Segoe UI", 10))
+        style.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))
+        
+        # Title
+        title_lbl = ttk.Label(self, text="Enigma Machine Console", font=("Segoe UI", 16, "bold"))
+        title_lbl.pack(pady=(0, 15))
 
-def coding_fin(x):
-    mes=coding(x)
-    root = tk.Tk()
-    root.title("MESSAGE")
-    root.geometry("600x200")
-    root.geometry("+220+220")
-    message=tk.Message(root,text=mes,width=500,)
-    message.pack()
-    root.mainloop()
+        # Key Frame
+        key_frame = ttk.Frame(self)
+        key_frame.pack(fill=tk.X, pady=(0, 15))
+        
+        ttk.Label(key_frame, text="3-Digit Key (Rotors):").pack(side=tk.LEFT)
+        self.key_var = tk.StringVar(value="123")
+        self.key_entry = ttk.Entry(key_frame, textvariable=self.key_var, width=8, font=("Segoe UI", 12), justify=tk.CENTER)
+        self.key_entry.pack(side=tk.LEFT, padx=10)
+        
+        # Input Frame
+        input_frame = ttk.LabelFrame(self, text="Input Message", padding=10)
+        input_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 15))
+        
+        self.input_text = tk.Text(input_frame, height=5, font=("Consolas", 11), wrap=tk.WORD, undo=True)
+        self.input_text.pack(fill=tk.BOTH, expand=True)
+        
+        # Buttons Frame
+        btn_frame = ttk.Frame(self)
+        btn_frame.pack(fill=tk.X, pady=(0, 15))
+        
+        self.btn_enc = ttk.Button(btn_frame, text="Encrypt \u2193", command=self.do_encrypt)
+        self.btn_enc.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
+        
+        self.btn_dec = ttk.Button(btn_frame, text="Decrypt \u2193", command=self.do_decrypt)
+        self.btn_dec.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(5, 0))
+        
+        self.btn_clear = ttk.Button(btn_frame, text="Clear", command=self.do_clear)
+        self.btn_clear.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(5, 0))
+        
+        # Output Frame
+        output_frame = ttk.LabelFrame(self, text="Output Result (Auto-copied to clipboard)", padding=10)
+        output_frame.pack(fill=tk.BOTH, expand=True)
+        
+        self.output_text = tk.Text(output_frame, height=5, font=("Consolas", 11), wrap=tk.WORD, bg="#f4f4f4")
+        self.output_text.pack(fill=tk.BOTH, expand=True)
+        self.output_text.config(state=tk.DISABLED)
 
-def decoding_fin(x):
-    mes=decoding(x)
-    root = tk.Tk()
-    root.title("MESSAGE")
-    root.geometry("600x200")
-    root.geometry("+320+320")
-    message=tk.Message(root,text=mes,width=500,)
-    message.pack()
-    root.mainloop()
+    def do_encrypt(self):
+        key = self.key_var.get().strip()
+        inp = self.input_text.get("1.0", tk.END).strip()
+        
+        # If the user included the key in input (e.g. "123 hello"), extract it cleanly
+        if len(inp) >= 4 and inp[:3].isdigit() and inp[3] == ' ':
+            key = inp[:3]
+            self.key_var.set(key)
+            inp = inp[4:]
+            self.input_text.delete("1.0", tk.END)
+            self.input_text.insert(tk.END, inp)
+            
+        if len(key) != 3 or not key.isdigit():
+            messagebox.showerror("Invalid Key", "Please provide exactly 3 digits for the key (e.g., 123).")
+            return
+            
+        if not inp:
+            return
+            
+        try:
+            result = optimized_coding(key, inp)
+            final_output = f"{key} {result}"
+            
+            self.output_text.config(state=tk.NORMAL)
+            self.output_text.delete("1.0", tk.END)
+            self.output_text.insert(tk.END, final_output)
+            self.output_text.config(state=tk.DISABLED)
+            
+            self.clipboard_clear()
+            self.clipboard_append(final_output)
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
 
-def inputbox():
-    root = tk.Tk()
-    root.title("CODING")
-    root.geometry("600x200")
-    root.geometry("+210+210")
-    enter=tk.Entry(root,width=50)
-    enter.pack(side="top",pady=20)
-    start=tk.Button(root,text="START",height=1,width=10,command=lambda:coding_fin(enter.get()))
-    start.pack(side="bottom",pady=20)
-    root.mainloop()
+    def do_decrypt(self):
+        inp = self.input_text.get("1.0", tk.END).strip()
+        key = self.key_var.get().strip()
+        
+        # Auto-extract key if user pastes full encrypted string
+        if len(inp) >= 4 and inp[:3].isdigit() and inp[3] == ' ':
+            key = inp[:3]
+            self.key_var.set(key)
+            inp = inp[4:]
+            self.input_text.delete("1.0", tk.END)
+            self.input_text.insert(tk.END, inp)
+            
+        if len(key) != 3 or not key.isdigit():
+            messagebox.showerror("Invalid Key", "Please provide exactly 3 digits for the key (e.g., 123).")
+            return
+            
+        if not inp:
+            return
+            
+        try:
+            result = optimized_decoding(key, inp)
+            final_output = f"{result}"
+            
+            self.output_text.config(state=tk.NORMAL)
+            self.output_text.delete("1.0", tk.END)
+            self.output_text.insert(tk.END, final_output)
+            self.output_text.config(state=tk.DISABLED)
+            
+            self.clipboard_clear()
+            self.clipboard_append(final_output)
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
 
-def outputbox():
-    root = tk.Tk()
-    root.title("DECODING")
-    root.geometry("600x200")
-    root.geometry("+310+310")
-    enter=tk.Entry(root,width=50)
-    enter.pack(side="top",pady=20)
-    start=tk.Button(root,text="START",height=1,width=10,command=lambda:decoding_fin(enter.get()))
-    start.pack(side="bottom",pady=20)
-    root.mainloop()
+    def do_clear(self):
+        self.input_text.delete("1.0", tk.END)
+        self.output_text.config(state=tk.NORMAL)
+        self.output_text.delete("1.0", tk.END)
+        self.output_text.config(state=tk.DISABLED)
 
-root=tk.Tk()
-root.title("ENCRYPTION")
-root.geometry("200x200")
-root.geometry("+200+200")
-inputing=tk.Button(root,text="CODING",height=3,width=10,command=lambda:inputbox())
-inputing.pack(side="top",pady=20)
-outputing=tk.Button(root,text="DECODING",height=3,width=10,command=lambda:outputbox())
-outputing.pack(side="bottom",pady=20)
-root.mainloop()
+if __name__ == "__main__":
+    app = EnigmaApp()
+    app.mainloop()
